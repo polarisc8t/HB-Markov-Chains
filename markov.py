@@ -1,3 +1,4 @@
+# import function called choice from module random
 from random import choice
 
 
@@ -26,14 +27,18 @@ def make_chains(text_string):
         >>> make_chains("hi there mary hi there juanita")
         {('hi', 'there'): ['mary', 'juanita'], ('there', 'mary'): ['hi'], ('mary', 'hi': ['there']}
     """
-
+    # chain_string should really be words - it's a list of words (duck typing)
+    # tokenizing a string of words
     chain_string = text_string.split()
     
     chain_dictionary = {}
 
     #for loop to add bigrams to dictionary as keys
+    # don't need a bigram of last word so we put -1 on the sensitivity list in 'for' loop
     for chain_keys in range(len(chain_string)-1):
-        bi_gram = chain_string[chain_keys], chain_string[chain_keys + 1]
+        # make this a tuple via making this enclosed in parentheses
+        bi_gram = (chain_string[chain_keys], chain_string[chain_keys + 1])
+        # assign to empty list
         chain_dictionary[bi_gram] = []   
     
     #loop over bigrams in dictionary to grab third word
