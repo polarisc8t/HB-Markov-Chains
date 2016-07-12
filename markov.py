@@ -27,31 +27,38 @@ def make_chains(text_string):
         >>> make_chains("hi there mary hi there juanita")
         {('hi', 'there'): ['mary', 'juanita'], ('there', 'mary'): ['hi'], ('mary', 'hi': ['there']}
     """
-    # chain_string should really be words - it's a list of words (duck typing)
+    # words should really be words - it's a list of words (duck typing)
     # tokenizing a string of words
-    chain_string = text_string.split()
+    words = text_string.split()
     
     chain_dictionary = {}
 
     #for loop to add bigrams to dictionary as keys
     # don't need a bigram of last word so we put -1 on the sensitivity list in 'for' loop
-    for chain_keys in range(len(chain_string)-1):
+    for chain_keys in range(len(words)-1):
         # make this a tuple via making this enclosed in parentheses
-        bi_gram = (chain_string[chain_keys], chain_string[chain_keys + 1])
+        bi_gram = (words[chain_keys], words[chain_keys + 1])
         # assign to empty list
-        chain_dictionary[bi_gram] = []   
-    
-    #loop over bigrams in dictionary to grab third word
-    for key in chain_dictionary:
-        values_list = []
-        for chain_values in range(len(chain_string) - 2):
-            bi_gram = chain_string[chain_values], chain_string[chain_values + 1]
-            #if bigram key is found, capture third word and add to list
-            if key == bi_gram:
-                bi_gram_plus_one = chain_string[chain_values + 2]
-                values_list.append(bi_gram_plus_one)
-                #append new list of values to dictionary
-                chain_dictionary[bi_gram] = values_list
+        chain_dictionary[bi_gram] = []
+
+    # loop through once!!
+    for i in range(len(words)-2):
+        bi_gram = (words[i], words[i+1])
+        third_word = words[i+2]
+        chain_dictionary[bi_gram].append(third_word)
+
+    # loops through multiple times and is not as efficient as the aforementioned
+    # #loop over bigrams in dictionary to grab third word
+    # for key in chain_dictionary:
+    #     values_list = []
+    #     for chain_values in range(len(words) - 2):
+    #         bi_gram = words[chain_values], words[chain_values + 1]
+    #         #if bigram key is found, capture third word and add to list
+    #         if key == bi_gram:
+    #             bi_gram_plus_one = words[chain_values + 2]
+    #             values_list.append(bi_gram_plus_one)
+    #             #append new list of values to dictionary
+    #             chain_dictionary[bi_gram] = values_list
 
     return chain_dictionary
 
