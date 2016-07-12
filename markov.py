@@ -14,9 +14,6 @@ def open_and_read_file(file_path):
 
     return file_string
     
-
-print open_and_read_file("green-eggs.txt")
-
 def make_chains(text_string):
     """Takes input text as string; returns _dictionary_ of markov chains.
 
@@ -30,11 +27,30 @@ def make_chains(text_string):
         {('hi', 'there'): ['mary', 'juanita'], ('there', 'mary'): ['hi'], ('mary', 'hi': ['there']}
     """
 
-    chains = {}
+    chain_string = text_string.split()
+    
+    chain_dictionary = {}
 
-    # your code goes here
+    #for loop to add bigrams to dictionary as keys
+    for chain_keys in range(len(chain_string)-1):
+        bi_gram = chain_string[chain_keys], chain_string[chain_keys + 1]
+        chain_dictionary[bi_gram] = []   
+    
+    #loop over bigrams in dictionary to grab third word
+    for key in chain_dictionary:
+        values_list = []
+        for chain_values in range(len(chain_string) - 2):
+            bi_gram = chain_string[chain_values], chain_string[chain_values + 1]
+            #if bigram key is found, capture third word and add to list
+            if key == bi_gram:
+                bi_gram_plus_one = chain_string[chain_values + 2]
+                values_list.append(bi_gram_plus_one)
+                #append new list of values to dictionary
+                chain_dictionary[bi_gram] = values_list
 
-    return chains
+    return chain_dictionary
+
+print make_chains(open_and_read_file("green-eggs.txt"))
 
 
 def make_text(chains):
