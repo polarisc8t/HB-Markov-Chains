@@ -47,6 +47,9 @@ def make_chains(text_string):
         third_word = words[i+2]
         chain_dictionary[bi_gram].append(third_word)
 
+    # appending None to last bi-gram in our dictionary
+    chain_dictionary[(words[-2], words[-1])].append(None)
+
     # loops through multiple times and is not as efficient as the aforementioned
     # #loop over bigrams in dictionary to grab third word
     # for key in chain_dictionary:
@@ -62,28 +65,45 @@ def make_chains(text_string):
 
     return chain_dictionary
 
-print make_chains(open_and_read_file("green-eggs.txt"))
-
+#print make_chains(open_and_read_file("green-eggs.txt"))
 
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
-    text = ""
+    my_list = []
+    bi_gram = ()
 
-    # your code goes here
+    #create initial bi_gram by randomly selecting a key 
+    bi_gram = choice(chains.keys())
 
-    return text
+    #randomly select a value for initial bi_gram
+    third_word = choice(chains[bi_gram])
+    # use extend for long string of items converted into a list
+    my_list.extend([bi_gram[0], bi_gram[1], third_word])
 
+    while third_word != None:
+        bi_gram = (my_list[-2],my_list[-1])
+        third_word = choice(chains[bi_gram])
+        my_list.append(third_word)
 
-input_path = "green-eggs.txt"
+    #strip None from the end of the list
+    del my_list[-1]    
 
-# Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+    #create a string from from the list
+    return " ".join(my_list)
 
-# Get a Markov chain
-chains = make_chains(input_text)
+print make_text(make_chains(open_and_read_file("green-eggs.txt")))
 
-# Produce random text
-random_text = make_text(chains)
+# input_path = "green-eggs.txt"
 
-print random_text
+# # Open the file and turn it into one long string
+# input_text = open_and_read_file(input_path)
+
+# # Get a Markov chain
+# chains = make_chains(input_text)
+
+# # Produce random text
+# random_text = make_text(chains)
+
+# print random_text
+
