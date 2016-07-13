@@ -1,5 +1,9 @@
+import sys
+
 # import function called choice from module random
 from random import choice
+
+file_name = sys.argv[1]
 
 
 def open_and_read_file(file_path):
@@ -71,7 +75,6 @@ def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
     my_list = []
-    bi_gram = ()
 
     #create initial bi_gram by randomly selecting a key 
     bi_gram = choice(chains.keys())
@@ -92,18 +95,17 @@ def make_text(chains):
     #create a string from from the list
     return " ".join(my_list)
 
-print make_text(make_chains(open_and_read_file("green-eggs.txt")))
+#assign file name to input path
+#input_path = "green-eggs.txt"
 
-# input_path = "green-eggs.txt"
+# Open the file and turn it into one long string
+input_text = open_and_read_file(file_name)
 
-# # Open the file and turn it into one long string
-# input_text = open_and_read_file(input_path)
+# Get a Markov chain
+chains = make_chains(input_text)
 
-# # Get a Markov chain
-# chains = make_chains(input_text)
+# Produce random text
+random_text = make_text(chains)
 
-# # Produce random text
-# random_text = make_text(chains)
-
-# print random_text
+print random_text
 
